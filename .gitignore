@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -28,3 +29,5 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+node_modules
+.vscode
