@@ -1,24 +1,42 @@
 <script lang="ts">
 import axios from 'axios'
-export default {
-  name: 'AppointmentsView',
-}
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
-axios
-  .get('http://localhost:8000/api/appointments')
-  .then((response) => {
-    console.log(response.data)
-  })
-  .catch((error) => {
-    console.error(error)
-  })
+export default {
+  name: 'AppointmentsView',
+  data() {
+    return {
+      appointments: null, // Propriété réactive pour stocker les données
+    }
+  },
+  mounted() {
+    this.fetchAppointments()
+  },
+  methods: {
+    async fetchAppointments() {
+      try {
+        const response = await axios({
+          method: 'get',
+          url: '/appointments',
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+          },
+        })
+        this.appointments = response.data // Mettre à jour la propriété réactive
+      } catch (error) {
+        console.error('Erreur lors de la récupération des RDV :', error)
+      }
+    },
+  },
+}
 </script>
 
 <template>
   <h1>Coucou ici les rdv</h1>
 
   <div>RDV:</div>
+  <div>{{ this.appointments }}</div>
 </template>
 
 <style scoped>
